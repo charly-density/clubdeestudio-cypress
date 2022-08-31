@@ -3,7 +3,8 @@ import { onFormLayoutsPage } from "../support/page_objects/formLayoutsPage"
 import {onDatePickerPage} from "../support/page_objects/datePickerPage"
 describe("Test with Page Objects", () => {
     beforeEach("open application", () => {
-        cy.visit("/")
+        cy.openHomePage()
+        // cy.visit("/")
     })
 
     it("Verifies navigation across the pages", () => {
@@ -17,9 +18,12 @@ describe("Test with Page Objects", () => {
 
     it('should submit Inline and Basic form and select tomorrow date in the calendar', () => {
         navigateTo.formLayoutsPage()
+
         onFormLayoutsPage.submitInlineFormWithNameAndEmail('Artem', 'test@test.com')
         onFormLayoutsPage.submitBasicFormWithEmailAndPassword('user','pass')
+
         navigateTo.datePickerPage()
         onDatePickerPage.selectCommonDatepickerDateFromToday(1)
+        onDatePickerPage.selectDayPickerWithRangeFromToday(7,14)
     })
 })

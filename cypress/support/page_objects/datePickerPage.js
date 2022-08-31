@@ -14,8 +14,8 @@ function selecDayFromCurrent(day) {
                 selecDayFromCurrent(day);
             } else {
                 cy.get(
-                    'nb-calendar-day-picker [class="day-cell ng-star-inserted"]'
-                )
+                    '.day-cell'
+                ).not('.bounding-month')
                     .contains(futureDay)
                     .click();
             }
@@ -34,6 +34,21 @@ export class DatePickerDateFromToday {
                 let dateAssert = selecDayFromCurrent(dateFromToday)
                 cy.wrap(input).invoke("prop", "value").should("contain", dateAssert);
                 cy.wrap(input).should("have.value", dateAssert);
+
+
+            })
+    }
+    selectDayPickerWithRangeFromToday(firstday, secondday) {
+        cy.contains("nb-card", "Datepicker With Range")
+            .find("input")
+            .then((input) => {
+                cy.wrap(input).click();
+                let dateAssertFirst = selecDayFromCurrent(firstday)
+                let dateAssertSecond = selecDayFromCurrent(secondday)
+
+                const finalDate = `${dateAssertFirst} - ${dateAssertSecond}`
+                cy.wrap(input).invoke("prop", "value").should("contain", finalDate);
+                cy.wrap(input).should("have.value", finalDate);
 
 
             })
